@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CyberCareer AI – Autonomous Cybersecurity Career Copilot for students and career changers. Career explorer, skill assessments, learning roadmaps, resume builder, and interview prep.">
+  <title>CyberCareer AI – AI Cybersecurity Career Copilot</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- App Container -->
+  <div class="app-layout">
+    
+    <!-- Top Navigation Bar -->
+    <header class="top-nav" role="banner">
+      <div class="nav-brand-group">
+        <button id="mobile-menu-toggle" class="btn-icon mobile-only" aria-label="Toggle navigation menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <div class="brand-logo" onclick="app.navigateTo('dashboard')">
+          <div class="shield-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <path d="M9 12l2 2 4-4" stroke="#00f2fe" stroke-width="2.5"></path>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">CyberCareer<span class="cyber-accent">AI</span></span>
+            <span class="brand-badge">CAPSTONE EDITION</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Global Search Bar -->
+      <div class="nav-search-container">
+        <div class="search-input-wrapper">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="global-search-input" placeholder="Search careers, skills, roadmaps, tools..." autocomplete="off">
+          <span class="search-shortcut">Ctrl+K</span>
+        </div>
+        <!-- Live Quick Search Dropdown -->
+        <div id="search-results-dropdown" class="search-dropdown hidden"></div>
+      </div>
+
+      <!-- Header Status & Actions -->
+      <div class="nav-actions">
+        <div class="status-indicator-chip" title="100% Client-Side Engine. No external tracking.">
+          <span class="pulse-dot"></span>
+          <span class="status-label">ENGINE: LOCAL & PRIVATE</span>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle-btn" class="btn-icon" aria-label="Toggle dark/light theme" title="Toggle theme">
+          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <!-- Reset & Export Menu Button -->
+        <button id="data-options-btn" class="btn-icon" aria-label="Data and reset options" title="Storage & settings">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace (Sidebar + Dynamic Main Content) -->
+    <div class="workspace-body">
+      
+      <!-- Primary Sidebar Navigation -->
+      <aside class="sidebar" id="app-sidebar" role="navigation">
+        <div class="sidebar-section-label">COPILOT MODULES</div>
+        <nav class="nav-list">
+          <button class="nav-item active" data-view="dashboard">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span>Home Dashboard</span>
+          </button>
+
+          <button class="nav-item" data-view="careers">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+            </svg>
+            <span>Career Explorer</span>
+            <span class="badge-pill">8 Roles</span>
+          </button>
+
+          <button class="nav-item" data-view="assessment">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <span>Skill Assessment</span>
+            <span class="badge-pill highlight">Diagnostic</span>
+          </button>
+
+          <button class="nav-item" data-view="roadmap">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle>
+              <circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path>
+            </svg>
+            <span>Learning Roadmap</span>
+            <span id="nav-roadmap-progress" class="badge-pill">0%</span>
+          </button>
+
+          <button class="nav-item" data-view="jobprep">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            </svg>
+            <span>Job & Internship Prep</span>
+          </button>
+
+          <button class="nav-item" data-view="interview">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              <circle cx="9" cy="10" r="1"></circle><circle cx="12" cy="10" r="1"></circle><circle cx="15" cy="10" r="1"></circle>
+            </svg>
+            <span>Interview Prep</span>
+            <span class="badge-pill">Mock Simulator</span>
+          </button>
+
+          <button class="nav-item" data-view="resume">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            <span>Resume & Portfolio</span>
+            <span class="badge-pill">ATS Ready</span>
+          </button>
+        </nav>
+
+        <!-- Sidebar Target Career Card -->
+        <div class="sidebar-target-card">
+          <div class="target-card-header">
+            <span class="target-label">TARGET PATHWAY</span>
+            <button class="btn-text-link" onclick="app.navigateTo('careers')">Change</button>
+          </div>
+          <div id="sidebar-target-role" class="target-role-title">SOC Analyst</div>
+          <div class="target-readiness">
+            <div class="readiness-label-row">
+              <span>Pathway Match</span>
+              <span id="sidebar-match-percent">82%</span>
+            </div>
+            <div class="progress-bar-track mini">
+              <div id="sidebar-match-bar" class="progress-bar-fill cyan" style="width: 82%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar Footer Info -->
+        <div class="sidebar-footer">
+          <button class="sidebar-footer-link" onclick="app.navigateTo('privacy')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <span>Privacy & Architecture</span>
+          </button>
+          <div class="sidebar-version">CyberCareer AI v1.0.0 (Offline Capstone)</div>
+        </div>
+      </aside>
+
+      <!-- Main Content View Area -->
+      <main class="main-content" id="main-content-area" role="main">
+
+        <!-- ========================================== -->
+        <!-- VIEW 1: HOME DASHBOARD                     -->
+        <!-- ========================================== -->
+        <section id="view-dashboard" class="content-view active">
+          
+          <!-- Hero Section -->
+          <div class="dashboard-hero">
+            <div class="hero-content">
+              <div class="hero-chip">
+                <span class="chip-pulse"></span>
+                <span>CYBERSECURITY CAREER ACCELERATOR &bull; CAPSTONE PROJECT</span>
+              </div>
+              <h1 class="hero-title">Welcome to <span class="gradient-text">CyberCareer AI</span></h1>
+              <p class="hero-subtitle">
+                An intelligent, client-side cybersecurity career copilot engineered to guide aspiring professionals from fundamental concepts to job-ready SOC, penetration testing, cloud security, and DFIR roles.
+              </p>
+              <div class="hero-cta-group">
+                <button class="btn btn-primary" onclick="app.navigateTo('assessment')">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                  <span>Take Diagnostic Assessment</span>
+                </button>
+                <button class="btn btn-secondary" onclick="app.navigateTo('roadmap')">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+                  <span>Explore 9-Stage Roadmap</span>
+                </button>
+                <button class="btn btn-outline" onclick="app.loadDemoStudentData()">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                  <span>Load Sample Demo Data</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Dashboard Hero Stat Graphic -->
+            <div class="hero-card-banner">
+              <div class="cyber-stat-box">
+                <div class="stat-box-title">CAREER READINESS SCORE</div>
+                <div class="stat-box-value" id="dash-readiness-score">76%</div>
+                <div class="stat-box-sub">Based on completed modules, diagnostic quiz & resume state</div>
+                <div class="progress-bar-track">
+                  <div class="progress-bar-fill cyan" id="dash-readiness-bar" style="width: 76%;"></div>
+                </div>
+              </div>
+              <div class="demo-data-notice">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                <span>Demo baseline active. All updates save locally in real-time.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Metric Grid -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-icon blue">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              </div>
+              <div class="metric-info">
+                <span class="metric-label">Roadmap Progress</span>
+                <span class="metric-number" id="dash-roadmap-count">14 / 45 Topics</span>
+                <span class="metric-meta" id="dash-roadmap-percent">31% Completed</span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon cyan">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
+              <div class="metric-info">
+                <span class="metric-label">Diagnostic Assessment</span>
+                <span class="metric-number" id="dash-assessment-status">Practitioner</span>
+                <span class="metric-meta" id="dash-assessment-score">Score: 14/18 (78%)</span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon green">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+              </div>
+              <div class="metric-info">
+                <span class="metric-label">Top Matched Role</span>
+                <span class="metric-number" id="dash-top-role">SOC Analyst</span>
+                <span class="metric-meta">88% Compatibility</span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-icon amber">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              </div>
+              <div class="metric-info">
+                <span class="metric-label">Resume Status</span>
+                <span class="metric-number" id="dash-resume-status">Draft Ready</span>
+                <span class="metric-meta">ATS Compliant &bull; Ready to Export</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dashboard Two-Column Hub -->
+          <div class="dashboard-columns">
+            
+            <!-- Left Column: Recommended Next Steps & Learning Priority -->
+            <div class="dash-col main">
+              <div class="card section-card">
+                <div class="card-header">
+                  <div class="card-header-left">
+                    <div class="badge-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></div>
+                    <h3 class="card-title">Copilot Recommended Next Steps</h3>
+                  </div>
+                  <button class="btn-text-link" onclick="app.navigateTo('roadmap')">View Full Roadmap</button>
+                </div>
+                
+                <div class="action-recommendations-list" id="dash-recommendations-container">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+
+              <!-- Quick Feature Launcher Cards -->
+              <div class="feature-launcher-grid">
+                <div class="launcher-card" onclick="app.navigateTo('careers')">
+                  <div class="launcher-icon blue">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+                  </div>
+                  <h4>Career Explorer</h4>
+                  <p>Investigate 8 specialized cybersecurity paths, core toolchains, and cert trajectories.</p>
+                  <span class="link-label">Explore 8 Roles &rarr;</span>
+                </div>
+
+                <div class="launcher-card" onclick="app.navigateTo('jobprep')">
+                  <div class="launcher-icon cyan">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                  </div>
+                  <h4>Skill Matcher & Projects</h4>
+                  <p>Paste real job descriptions to reveal missing skills and build 4 home-lab portfolio projects.</p>
+                  <span class="link-label">Analyze Job Specs &rarr;</span>
+                </div>
+
+                <div class="launcher-card" onclick="app.navigateTo('interview')">
+                  <div class="launcher-icon green">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                  </div>
+                  <h4>Interview Drills & Simulator</h4>
+                  <p>Master technical flashcards, behavioral STAR questions, and interactive mock scenarios.</p>
+                  <span class="link-label">Start Interview Practice &rarr;</span>
+                </div>
+
+                <div class="launcher-card" onclick="app.navigateTo('resume')">
+                  <div class="launcher-icon amber">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                  </div>
+                  <h4>Resume & Portfolio Assistant</h4>
+                  <p>Generate clean, ATS-compliant resumes with verified projects, skills, and print PDF output.</p>
+                  <span class="link-label">Build ATS Resume &rarr;</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Domain Mastery Radar & System Status -->
+            <div class="dash-col side">
+              
+              <!-- Domain Competency Breakdown -->
+              <div class="card section-card">
+                <div class="card-header">
+                  <h3 class="card-title">Skill Domain Breakdown</h3>
+                  <button class="btn-text-link" onclick="app.navigateTo('assessment')">Retake Quiz</button>
+                </div>
+                <div class="domain-bars-list" id="dash-domain-bars">
+                  <!-- Injected via JavaScript -->
+                </div>
+              </div>
+
+              <!-- Capstone System Architecture Box -->
+              <div class="card section-card architectural-summary">
+                <div class="card-header">
+                  <h3 class="card-title">System Architecture</h3>
+                  <span class="badge-pill outline">College Capstone</span>
+                </div>
+                <div class="sys-summary-content">
+                  <p class="text-sm">Built with zero external API dependencies for permanent offline availability and instant GitHub Pages hosting.</p>
+                  <ul class="sys-feature-list">
+                    <li><span class="check-icon">&#10003;</span> 100% Client-Side Vanilla JS</li>
+                    <li><span class="check-icon">&#10003;</span> Persistent LocalStorage Database</li>
+                    <li><span class="check-icon">&#10003;</span> ATS Resume Generator & Print Engine</li>
+                    <li><span class="check-icon">&#10003;</span> Air-gapped Privacy Architecture</li>
+                  </ul>
+                  <div class="sys-cta-row">
+                    <button class="btn btn-sm btn-outline" onclick="app.exportDataJSON()">Export Backup</button>
+                    <button class="btn btn-sm btn-outline danger" onclick="app.confirmResetAll()">Reset Data</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- VIEW 2: CYBERSECURITY CAREER EXPLORER       -->
+        <!-- ========================================== -->
+        <section id="view-careers" class="content-view">
+          <div class="view-header">
+            <div>
+              <div class="breadcrumb">Home &bull; Exploration</div>
+              <h2 class="view-title">Cybersecurity Career Explorer</h2>
+              <p class="view-description">
+                Explore 8 essential cybersecurity specializations. Compare technical competencies, real-world responsibilities, entry certifications, and practical learning resources.
+              </p>
+            </div>
+            <div class="header-controls">
+              <!-- Career Search & Filter -->
+              <div class="search-input-wrapper small">
+                <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="career-filter-input" placeholder="Filter by title, skill, or cert...">
+              </div>
+            </div>
+          </div>
+
+          <!-- Career Filter Tabs -->
+          <div class="category-filters-row">
+            <button class="filter-tab active" data-filter="all">All Roles (8)</button>
+            <button class="filter-tab" data-filter="defensive">Defensive / SOC (3)</button>
+            <button class="filter-tab" data-filter="offensive">Offensive & AppSec (2)</button>
+            <button class="filter-tab" data-filter="cloud-infra">Cloud & Architecture (1)</button>
+            <button class="filter-tab" data-filter="forensics">Forensics / DFIR (1)</button>
+            <button class="filter-tab" data-filter="consulting">GRC & Advisory (1)</button>
+          </div>
+
+          <!-- Career Cards Grid (8 roles) -->
+          <div class="careers-grid" id="careers-cards-container">
+            <!-- Dynamic career cards will be rendered by script.js -->
+          </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- VIEW 3: INTERACTIVE SKILL ASSESSMENT        -->
+        <!-- ========================================== -->
+        <section id="view-assessment" class="content-view">
+          <div class="view-header">
+            <div>
+              <div class="breadcrumb">Home &bull; Diagnostic Assessment</div>
+              <h2 class="view-title">Interactive Skill Assessment</h2>
+              <p class="view-description">
+                Evaluate your practical foundation across 6 core cybersecurity pillars: Networking, Linux, Python, Core Security, Web App Security, and Cloud Architecture.
+              </p>
+            </div>
+            <div class="header-controls">
+              <span class="badge-pill highlight">18 Diagnostic Questions</span>
+            </div>
+          </div>
+
+          <!-- Assessment In-Progress State -->
+          <div id="assessment-quiz-container" class="quiz-container-box">
+            
+            <!-- Progress Banner -->
+            <div class="quiz-progress-header">
+              <div class="quiz-progress-text">
+                <span class="quiz-step-label">Question <span id="current-q-index">1</span> of <span id="total-q-count">18</span></span>
+                <span class="quiz-category-badge" id="current-q-category">Networking</span>
+              </div>
+              <div class="progress-bar-track">
+                <div class="progress-bar-fill cyan" id="quiz-progress-bar" style="width: 5%;"></div>
+              </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="quiz-card" id="quiz-active-card">
+              <div class="question-number-tag" id="q-number-pill">Q1</div>
+              <h3 class="question-title" id="q-text">Loading question prompt...</h3>
+              <div class="question-scenario" id="q-scenario"></div>
+              
+              <!-- Answer Choices -->
+              <div class="choices-container" id="q-choices-container">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+
+            <!-- Quiz Controls -->
+            <div class="quiz-nav-row">
+              <button class="btn btn-outline" id="quiz-prev-btn" onclick="app.prevQuestion()" disabled>
+                &larr; Previous Question
+              </button>
+              <div class="quiz-dots-nav" id="quiz-dots-container"></div>
+              <button class="btn btn-primary" id="quiz-next-btn" onclick="app.nextQuestion()">
+                Next Question &rarr;
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Assessment Results View (hidden by default) -->
+          <div id="assessment-results-container" class="results-dashboard-box hidden">
+            
+            <div class="results-hero-banner">
+              <div class="results-hero-text">
+                <div class="badge-pill green">ASSESSMENT COMPLETED</div>
+                <h3 class="results-title">Diagnostic Assessment Results</h3>
+                <p id="results-summary-text">Detailed analysis of your cybersecurity foundation and strengths.</p>
+              </div>
+              <div class="results-score-display">
+                <div class="score-number" id="results-overall-score">78%</div>
+                <div class="score-sub" id="results-score-detail">14 of 18 Correct</div>
+                <div class="score-level-badge" id="results-tier-badge">Practitioner</div>
+              </div>
+            </div>
+
+            <!-- Strengths and Areas of Improvement -->
+            <div class="results-two-col">
+              <div class="results-card strengths">
+                <div class="results-card-title">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span>Identified Strengths</span>
+                </div>
+                <ul id="results-strengths-list" class="findings-list"></ul>
+              </div>
+
+              <div class="results-card improvements">
+                <div class="results-card-title">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                  <span>Priority Improvement Areas</span>
+                </div>
+                <ul id="results-improvements-list" class="findings-list"></ul>
+              </div>
+            </div>
+
+            <!-- Personalized Career Recommendations -->
+            <div class="card section-card">
+              <div class="card-header">
+                <h3 class="card-title">Personalized Career Alignment</h3>
+                <span class="badge-pill cyan">Algorithmic Match</span>
+              </div>
+              <div class="matched-roles-row" id="results-matched-roles-container">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+
+            <!-- Domain Breakdown & Action Buttons -->
+            <div class="card section-card">
+              <div class="card-header">
+                <h3 class="card-title">Domain Mastery Analysis</h3>
+                <span class="text-sm text-muted">6 Core Security Pillars</span>
+              </div>
+              <div class="domain-bars-list" id="results-domain-breakdown">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+
+            <!-- Results Controls -->
+            <div class="results-actions-bar">
+              <button class="btn btn-primary" onclick="app.navigateTo('roadmap')">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle></svg>
+                <span>Follow Tailored Learning Roadmap</span>
+              </button>
+              <button class="btn btn-secondary" id="toggle-quiz-review-btn" onclick="app.toggleQuizAnswerReview()">
+                <span>Review All Question Explanations</span>
+              </button>
+              <button class="btn btn-outline" onclick="app.retakeAssessment()">
+                <span>Retake Assessment</span>
+              </button>
+            </div>
+
+            <!-- Detailed Answer Review Accordion (Hidden by default) -->
+            <div id="quiz-review-section" class="review-accordion-container hidden">
+              <h4 class="review-section-title">Comprehensive Answer Explanations</h4>
+              <div id="quiz-review-items" class="review-items-list"></div>
+            </div>
+
+          </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- VIEW 4: PERSONALIZED LEARNING ROADMAP      -->
+        <!-- ========================================== -->
+        <section id="view-roadmap" class="content-view">
+          <div class="view-header">
+            <div>
+              <div class="breadcrumb">Home &bull; Curriculum</div>
+              <h2 class="view-title">Personalized Cybersecurity Roadmap</h2>
+              <p class="view-description">
+                A structured, 9-stage progression engineered to advance your technical capabilities from fundamental networking through hands-on ethical hacking and cloud hardening.
+              </p>
+            </div>
+            <div class="header-controls roadmap-controls">
+              <button class="btn btn-sm btn-outline" onclick="app.markAllRoadmap(true)">Mark All Complete</button>
+              <button class="btn btn-sm btn-outline danger" onclick="app.resetRoadmap()">Reset Roadmap</button>
+            </div>
+          </div>
+
+          <!-- Overall Roadmap Progress Banner -->
+          <div class="roadmap-summary-banner">
+            <div class="summary-banner-info">
+              <div class="banner-title-row">
+                <span class="banner-badge">PROGRESS TRACKER</span>
+                <span class="banner-percent" id="roadmap-big-percent">31% COMPLETED</span>
+              </div>
+              <div class="progress-bar-track large">
+                <div class="progress-bar-fill cyan" id="roadmap-big-bar" style="width: 31%;"></div>
+              </div>
+              <div class="banner-stats-row">
+                <span id="roadmap-topics-completed-label">14 of 45 topics checked off</span>
+                <span class="next-lesson-hint" id="roadmap-next-lesson-banner">Next: <strong>3.3 Parsing Security Logs with Regex</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 9 Learning Modules Accordion/List -->
+          <div class="roadmap-modules-list" id="roadmap-modules-container">
+            <!-- 9 comprehensive modules rendered via script.js -->
+          </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- VIEW 5: JOB & INTERNSHIP PREPARATION       -->
+        <!-- ========================================== -->
+        <section id="view-jobprep" class="content-view">
+          <div class="view-header">
+            <div>
+              <div class="breadcrumb">Home &bull; Career Readiness</div>
+              <h2 class="view-title">Job & Internship Preparation</h2>
+              <p class="view-description">
+                Bridge the transition from student to practitioner with automated job description skill matching, portfolio project blueprints, and structured application checklists.
+              </p>
+            </div>
+            <div class="header-controls">
+              <span class="badge-pill outline">Illustrative Career Tools</span>
+            </div>
+          </div>
+
+          <!-- Job Description Skill Matcher Tool -->
+          <div class="card section-card">
+            <div class="card-header">
+              <div class="card-header-left">
+                <div class="badge-icon cyan"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></div>
+                <div>
+                  <h3 class="card-title">Job Description Skill-Matching Analyzer</h3>
+                  <p class="card-subtitle">Paste a real or sample job description to instantly analyze skill coverage, identify gaps, and receive targeted roadmap recommendations.</p>
+                </div>
+              </div>
+              <div class="job-preset-buttons">
+                <button class="btn btn-sm btn-outline" onclick="app.loadJobSample('soc')">Sample SOC Analyst Job</button>
+                <button class="btn btn-sm btn-outline" onclick="app.loadJobSample('cloud')">Sample Cloud Sec Job</button>
+                <button class="btn btn-sm btn-outline" onclick="app.loadJobSample('pentest')">Sample PenTester Job</button>
+              </div>
+            </div>
+
+            <div class="skill-matcher-body">
+              <div class="form-group">
+                <label for="job-desc-input">Paste Cybersecurity Job Posting Text:</label>
+                <textarea id="job-desc-input" rows="5" class="form-textarea" placeholder="Paste requirements, qualifications, and toolsets from any LinkedIn, Indeed, or company careers page here..."></textarea>
+              </div>
+              
+              <div class="matcher-actions-row">
+                <button class="btn btn-primary" onclick="app.analyzeJobDescription()">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                  <span>Analyze Skills & Missing Gaps</span>
+                </button>
+                <button class="btn btn-outline" onclick="document.getElementById('job-desc-input').value = ''; document.getElementById('matcher-results-box').classList.add('hidden');">
+                  Clear
+                </button>
+              </div>
+
+              <!-- Matcher Output Area (Hidden until analyzed) -->
+              <div id="matcher-results-box" class="matcher-results-container hidden">
+                <div class="matcher-score-banner">
+                  <div class="score-circle-wrapper">
+                    <div class="score-circle-number" id="matcher-score-percent">75%</div>
+                    <div class="score-circle-label">Skill Match</div>
+                  </div>
+                  <div class="score-analysis-text">
+                    <h4 id="matcher-summary-heading">Strong Foundation with Key Technical Gaps</h4>
+                    <p id="matcher-summary-desc">You match majority of foundational requirements. Bridging 2 critical tooling gaps will maximize interview callbacks.</p>
+                  </div>
+                </div>
+
+                <div class="skills-breakdown-row">
+                  <div class="skills-col matched">
+                    <h5><span class="dot-green"></span> Matched Skills (<span id="matcher-matched-count">0</span>)</h5>
+                    <div id="matcher-matched-badges" class="badges-wrap"></div>
+                  </div>
+                  <div class="skills-col missing">
+                    <h5><span class="dot-red"></span> Missing / Target Skills (<span id="matcher-missing-count">0</span>)</h5>
+                    <div id="matcher-missing-badges" class="badges-wrap"></div>
+                  </div>
+                </div>
+
+                <div class="gap-bridging-box">
+                  <h5>Recommended Roadmap Steps to Bridge Identified Gaps:</h5>
+                  <div id="matcher-gap-recommendations" class="gap-steps-list"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Portfolio Project Blueprints -->
+          <div class="card section-card">
+            <div class="card-header">
+              <div class="card-header-left">
+                <div class="badge-icon green"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg></div>
+                <div>
+                  <h3 class="card-title">Hands-On Cybersecurity Portfolio Blueprints</h3>
+                  <p class="card-subtitle">Recruiters prioritize demonstrated practical labs over passive certifications. Build these 4 high-impact projects for your GitHub.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="project-blueprints-grid" id="project-blueprints-container">
+              <!-- Rendered via script.js -->
+            </div>
+          </div>
+
+          <!-- Application Checklists & Resume Improvement Tips -->
+          <div class="prep-split-grid">
+            <!-- Internship Checklist -->
+            <div class="card section-card">
+              <div class="card-header">
+                <h3 class="card-title">Internship Application Checklist</h3>
+                <span class="badge-pill">Step-by-Step</span>
+              </div>
+              <div class="checklist-items-wrap" id="internship-checklist-container">
+                <!-- Dynamic Checkbox list -->
+              </div>
+            </div>
+
+            <!-- Resume Improvement Tips -->
+            <div class="card section-card">
+              <div class="card-header">
+                <h3 class="card-title">Cybersecurity Resume Best Practices</h3>
+                <span class="badge-pill highlight">Recruiter Insights</span>
+              </div>
+              <div class="resume-tips-content">
+                <div class="tip-item">
+                  <div class="tip-badge do">DO</div>
+                  <div class="tip-body">
+                    <strong>Quantify simulated incidents:</strong> "Configured Wazuh SIEM to ingest Sysmon logs from 3 virtual endpoints, writing 6 custom detection rules for credential dumping."
+                  </div>
+                </div>
+                <div class="tip-item">
+                  <div class="tip-badge do">DO</div>
+                  <div class="tip-body">
+                    <strong>Link live lab artifacts:</strong> Include direct GitHub hyperlinks to your packet capture walkthroughs, CTF write-ups, or automation scripts.
+                  </div>
+                </div>
+                <div class="tip-item">
+                  <div class="tip-badge dont">DON'T</div>
+                  <div class="tip-body">
+                    <strong>Avoid buzzword soup:</strong> Listing "Ethical Hacking, Threat Intelligence, Cryptography" without mentioning the specific tools (Burp Suite, Wireshark, Python) hurts ATS ranking.
+                  </div>
+                </div>
+                <div class="tip-item">
+                  <div class="tip-badge dont">DON'T</div>
+                  <div class="tip-body">
+                    <strong>Don't invent experience:</strong> Frame home lab and capstone engineering as "Cybersecurity Engineering Projects & Hands-On Labs" with authentic technical depth.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- VIEW 6: INTERVIEW PREPARATION               -->
+        <!-- ========================================== -->
+        <section id="view-interview" class="content-view">
+          <div class="view-header">
+            <div>
+              <div class="breadcrumb">Home &bull; Technical & Behavioral</div>
+              <h2 class="view-title">Cybersecurity Interview Preparation</h2>
+              <p class="view-description">
+                Prepare for technical whiteboard questions, scenario-based triage drills, and behavioral HR prompts with the interactive question bank and mock simulator.
+              </p>
+            </div>
+            <div class="header-controls">
+              <div class="interview-view-tabs">
+                <button class="filter-tab active" id="tab-btn-questions" onclick="app.switchInterviewTab('questions')">Q&A Question Bank</button>
+                <button class="filter-tab" id="tab-btn-simulator" onclick="app.switchInterviewTab('simulator')">Mock Interview Practice</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interview Mode 1: Question Bank -->
+          <div id="interview-questions-mode">
+            
+            <!-- Filters -->
+            <div class="interview-filter-bar">
+              <div class="search-input-wrapper small">
+                <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="interview-search-input" placeholder="Search questions (e.g., TCP, DNS, Incident, STAR)...">
+              </div>
+
+              <div class="category-filters-row">
+                <button class="filter-tab active" data-int-filter="all">All Questions</button>
+                <button class="filter-tab" data-int-filter="technical">Technical Fundamentals</button>
+                <button class="filter-tab" data-int-filter="incident">Incident Response & SOC</button>
+                <button class="filter-tab" data-int-filter="behavioral">HR & Behavioral (STAR)</button>
+              </div>
+            </div>
+
+            <!-- Question Cards Grid -->
+            <div class="interview-cards-grid" id="interview-cards-container">
+              <!-- Rendered via script.js -->
+            </div>
+          </div>
+
+          <!-- Interview Mode 2: Mock Interview Simulator -->
+          <div id="interview-simulator-mode" class="hidden">
+            <div class="card section-card">
+              <div class="card-header">
+                <div class="card-header-left">
+                  <div class="badge-icon cyan"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg></div>
+                  <div>
+                    <h3 class="card-title">Interactive Mock Interview Practice Simulator</h3>
+                    <p class="card-subtitle">Practice articulating your technical response under realistic scenario conditions, followed by self-evaluation against the official rubric.</p>
+                  </div>
+                </div>
+                <div class="simulator-role-select">
+                  <label for="mock-role-selector">Select Scenario Track:</label>
+                  <select id="mock-role-selector" class="form-select" onchange="app.loadMockScenario()">
+                    <option value="soc">SOC Analyst Tier 1 – Alert Triage</option>
+                    <option value="ir">Incident Responder – Ransomware Containment</option>
+                    <option value="pentest">Penetration Tester – Web Vulnerability Escalation</option>
+                    <option value="behavioral">Behavioral – Handling Critical Security Disagreements</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="simulator-body">
+                <!-- Prompt Box -->
+                <div class="scenario-prompt-box">
+                  <div class="scenario-badge">LIVE INTERVIEW SCENARIO</div>
+                  <h4 id="mock-scenario-title" class="mock-scenario-title">Scenario Prompt Loading...</h4>
+                  <p id="mock-scenario-desc" class="mock-scenario-desc">Detailed scenario prompt description...</p>
+                </div>
+
+                <!-- Response Input Area -->
+                <div class="form-group">
+                  <label for="mock-user-answer">Your Structured Response (Explain step-by-step actions and reasoning):</label>
+                  <textarea id="mock-user-answer" rows="6" class="form-textarea" placeholder="Begin by outlining your immediate actions, containment strategy, tools used (e.g. Wireshark, Splunk, EDR), and team communication..."></textarea>
+                </div>
+
+                <div class="mock-actions-row">
+                  <button class="btn btn-primary" onclick="app.evaluateMockAnswer()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    <span>Check Key Points & Evaluate Rubric</span>
+                  </button>
+                  <button class="btn btn-outline" onclick="app.loadMockScenario()">
+                    Next Scenario
+                  </button>
+                </div>
+
+                <!-- Evaluation & Rubric Box -->
+                <div id="mock-rubric-box" class="mock-rubric-container hidden">
+                  <div class="rubric-header">
+                    <h4>Self-Evaluation Rubric: Essential Concepts to Cover</h4>
+                    <p class="text-sm text-muted">Check each key checkpoint that your response effectively addressed:</p>
+                  </div>
+
+                  <div id="mock-checkpoints-list" class="rubric-checkpoints"></div>
+
+                  <div class="ideal-answer-box">
+                    <h5>Model Answer & Expert Explanation:</h5>
+                    <div id="mock-ideal-answer" class="model-answer-text"></div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- VIEW 7: RESUME AND PORTFOLIO ASSISTANT     -->
+        <!-- ========================================== -->
+        <section id="view-resume" class="content-view">
+          <div class="view-header">
+            <div>
+              <div class="breadcrumb">Home &bull; Professional Portfolio</div>
+              <h2 class="view-title">Resume & Portfolio Assistant</h2>
+              <p class="view-description">
+                Craft a high-impact, ATS-optimized cybersecurity resume. Load realistic capstone student templates, customize every section, and export directly as clean print/PDF.
+              </p>
+            </div>
+            <div class="header-controls">
+              <button class="btn btn-sm btn-outline" onclick="app.loadSampleResumeData()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>Load Sample Profile</span>
+              </button>
+              <button class="btn btn-sm btn-primary" onclick="window.print()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                <span>Print / Save as PDF</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Dual Column Layout: Form on Left, Live Resume Preview on Right -->
+          <div class="resume-workspace-grid">
+            
+            <!-- Left Column: Interactive Form -->
+            <div class="resume-form-col">
+              <div class="card section-card">
+                <div class="card-header">
+                  <h3 class="card-title">Resume Information Editor</h3>
+                  <div class="card-header-actions">
+                    <button class="btn-text-link" onclick="app.clearResumeForm()">Clear All</button>
+                  </div>
+                </div>
+
+                <form id="resume-builder-form" onsubmit="return false;" class="resume-form">
+                  
+                  <!-- Section 1: Contact Details -->
+                  <div class="form-section-title">1. Contact & Identity</div>
+                  <div class="form-row-2">
+                    <div class="form-group">
+                      <label for="res-name">Full Name *</label>
+                      <input type="text" id="res-name" class="form-input" placeholder="e.g. Alex Morgan" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="res-title">Target Role / Headline *</label>
+                      <input type="text" id="res-title" class="form-input" placeholder="e.g. Aspiring SOC Analyst | Cybersecurity Senior" required>
+                    </div>
+                  </div>
+
+                  <div class="form-row-3">
+                    <div class="form-group">
+                      <label for="res-email">Email Address</label>
+                      <input type="email" id="res-email" class="form-input" placeholder="alex.morgan@email.com">
+                    </div>
+                    <div class="form-group">
+                      <label for="res-phone">Phone / Location</label>
+                      <input type="text" id="res-phone" class="form-input" placeholder="(555) 019-2834 &bull; Austin, TX">
+                    </div>
+                    <div class="form-group">
+                      <label for="res-linkedin">LinkedIn / GitHub</label>
+                      <input type="text" id="res-linkedin" class="form-input" placeholder="linkedin.com/in/alex-cyber">
+                    </div>
+                  </div>
+
+                  <!-- Section 2: Career Objective -->
+                  <div class="form-section-title">2. Professional Objective / Summary</div>
+                  <div class="form-group">
+                    <div class="objective-helpers-row">
+                      <span class="text-xs text-muted">Quick Templates:</span>
+                      <button type="button" class="btn-chip" onclick="app.applyObjectiveTemplate('soc')">SOC Analyst</button>
+                      <button type="button" class="btn-chip" onclick="app.applyObjectiveTemplate('pentest')">Penetration Tester</button>
+                      <button type="button" class="btn-chip" onclick="app.applyObjectiveTemplate('student')">General Capstone</button>
+                    </div>
+                    <textarea id="res-summary" rows="3" class="form-textarea" placeholder="Concise 2-3 sentence overview highlighting your cybersecurity degree, core tooling, and dedication to defense operations..."></textarea>
+                  </div>
+
+                  <!-- Section 3: Education -->
+                  <div class="form-section-title">3. Education & Academic Background</div>
+                  <div class="form-row-2">
+                    <div class="form-group">
+                      <label for="res-degree">Degree & Major</label>
+                      <input type="text" id="res-degree" class="form-input" placeholder="B.S. in Cybersecurity & Information Assurance">
+                    </div>
+                    <div class="form-group">
+                      <label for="res-university">Institution & Graduation</label>
+                      <input type="text" id="res-university" class="form-input" placeholder="State University &bull; Expected May 2026">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="res-coursework">Relevant Coursework</label>
+                    <input type="text" id="res-coursework" class="form-input" placeholder="Network Security, Operating System Hardening, Incident Response, Cryptography, Database Security">
+                  </div>
+
+                  <!-- Section 4: Technical Skills -->
+                  <div class="form-section-title">4. Technical Skills & Tools</div>
+                  <div class="form-group">
+                    <label for="res-skills-tools">Security Tools & SIEM</label>
+                    <input type="text" id="res-skills-tools" class="form-input" placeholder="Splunk, Wireshark, Nmap, Wazuh, Zeek, Snort, Metasploit, Burp Suite">
+                  </div>
+                  <div class="form-row-2">
+                    <div class="form-group">
+                      <label for="res-skills-os">Operating Systems & Cloud</label>
+                      <input type="text" id="res-skills-os" class="form-input" placeholder="Kali Linux, Ubuntu Server, Windows Server, AWS (IAM, VPC, S3)">
+                    </div>
+                    <div class="form-group">
+                      <label for="res-skills-scripting">Programming & Protocols</label>
+                      <input type="text" id="res-skills-scripting" class="form-input" placeholder="Python, Bash, PowerShell, TCP/IP, DNS, HTTP/S, SSH">
+                    </div>
+                  </div>
+
+                  <!-- Section 5: Certifications -->
+                  <div class="form-section-title">5. Certifications & Badges</div>
+                  <div class="form-group">
+                    <label for="res-certifications">Certifications (Name, Issuer, Status)</label>
+                    <textarea id="res-certifications" rows="2" class="form-textarea" placeholder="CompTIA Security+ (Certified)&#10;CompTIA Network+ (Certified)&#10;CompTIA CySA+ (In Progress)"></textarea>
+                  </div>
+
+                  <!-- Section 6: Practical Projects -->
+                  <div class="form-section-title">6. Practical Cybersecurity Projects</div>
+                  <div class="form-group">
+                    <label for="res-projects">Projects (Title, Tech Stack, & Detailed Accomplishment Bullets)</label>
+                    <textarea id="res-projects" rows="6" class="form-textarea" placeholder="Virtual Enterprise SOC Lab | Wazuh, Sysmon, VirtualBox&#10;&bull; Deployed virtual security operations environment ingesting Windows telemetry.&#10;&bull; Engineered 5 custom detection rules for brute-force attacks and privilege escalation."></textarea>
+                  </div>
+
+                  <!-- Section 7: Experience / Internship -->
+                  <div class="form-section-title">7. Experience & Internships</div>
+                  <div class="form-group">
+                    <label for="res-experience">Work / Internship Experience (Optional)</label>
+                    <textarea id="res-experience" rows="4" class="form-textarea" placeholder="IT Security Intern | Campus Technology Services (Summer 2025)&#10;&bull; Monitored tier-1 phishing alerts across 12,000 active student accounts.&#10;&bull; Assisted in deploying multi-factor authentication (MFA) rollouts."></textarea>
+                  </div>
+
+                  <!-- Form Action Buttons -->
+                  <div class="form-actions-bar">
+                    <button type="button" class="btn btn-primary" onclick="app.updateResumePreview()">
+                      <span>Update Live Preview</span>
+                    </button>
+                    <button type="button" class="btn btn-outline" onclick="app.copyResumePlainText()">
+                      <span>Copy Plain Text</span>
+                    </button>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+
+            <!-- Right Column: ATS Live Resume Preview -->
+            <div class="resume-preview-col">
+              <div class="resume-preview-sticky">
+                <div class="preview-toolbar no-print">
+                  <div class="toolbar-label">
+                    <span class="live-dot"></span>
+                    <span>LIVE ATS RESUME PREVIEW</span>
+                  </div>
+                  <div class="toolbar-actions">
+                    <button class="btn btn-sm btn-primary" onclick="window.print()">Print / PDF</button>
+                  </div>
+                </div>
+
+                <!-- Printable Resume Sheet (White Background, Black Text) -->
+                <div class="printable-resume-sheet" id="live-resume-sheet">
+                  
+                  <!-- Resume Header -->
+                  <div class="resume-sheet-header">
+                    <h1 class="sheet-name" id="sheet-name">Alex Morgan</h1>
+                    <div class="sheet-title" id="sheet-title">Aspiring SOC Analyst | Cybersecurity Senior</div>
+                    <div class="sheet-contact" id="sheet-contact">
+                      alex.morgan@email.com &bull; (555) 019-2834 &bull; Austin, TX &bull; linkedin.com/in/alex-cyber
+                    </div>
+                  </div>
+
+                  <!-- Professional Summary -->
+                  <div class="sheet-section">
+                    <div class="sheet-heading">PROFESSIONAL SUMMARY</div>
+                    <div class="sheet-divider"></div>
+                    <p class="sheet-text" id="sheet-summary">
+                      Dedicated senior cybersecurity student equipped with hands-on experience in security event monitoring, log analysis, and incident triage. Proficient with Splunk, Wireshark, and Python scripting for security automation. Passionate about defending enterprise infrastructure.
+                    </p>
+                  </div>
+
+                  <!-- Technical Skills -->
+                  <div class="sheet-section">
+                    <div class="sheet-heading">TECHNICAL COMPETENCIES</div>
+                    <div class="sheet-divider"></div>
+                    <div class="sheet-skills-grid">
+                      <div><strong>Security Tools:</strong> <span id="sheet-skills-tools">Splunk, Wireshark, Nmap, Wazuh, Zeek, Burp Suite</span></div>
+                      <div><strong>Operating Systems & Cloud:</strong> <span id="sheet-skills-os">Kali Linux, Ubuntu Server, Windows Server, AWS</span></div>
+                      <div><strong>Programming & Protocols:</strong> <span id="sheet-skills-scripting">Python, Bash, PowerShell, TCP/IP, DNS, HTTP/S</span></div>
+                    </div>
+                  </div>
+
+                  <!-- Certifications -->
+                  <div class="sheet-section">
+                    <div class="sheet-heading">CERTIFICATIONS</div>
+                    <div class="sheet-divider"></div>
+                    <div class="sheet-list" id="sheet-certifications">
+                      <div>&bull; CompTIA Security+ (SY0-701) &bull; CompTIA</div>
+                      <div>&bull; CompTIA Network+ (N10-008) &bull; CompTIA</div>
+                    </div>
+                  </div>
+
+                  <!-- Practical Cybersecurity Projects -->
+                  <div class="sheet-section">
+                    <div class="sheet-heading">CYBERSECURITY PROJECTS & LABS</div>
+                    <div class="sheet-divider"></div>
+                    <div class="sheet-projects-list" id="sheet-projects">
+                      <!-- Dynamic project items -->
+                    </div>
+                  </div>
+
+                  <!-- Work Experience -->
+                  <div class="sheet-section" id="sheet-exp-section">
+                    <div class="sheet-heading">EXPERIENCE & INTERNSHIPS</div>
+                    <div class="sheet-divider"></div>
+                    <div class="sheet-experience-list" id="sheet-experience">
+                      <!-- Dynamic experience items -->
+                    </div>
+                  </div>
+
+                  <!-- Education -->
+                  <div class="sheet-section">
+                    <div class="sheet-heading">EDUCATION</div>
+                    <div class="sheet-divider"></div>
+                    <div class="sheet-edu-row">
+                      <strong id="sheet-degree">B.S. in Cybersecurity & Information Assurance</strong>
+                      <span id="sheet-university">State University &bull; Expected May 2026</span>
+                    </div>
+                    <div class="sheet-text text-sm" id="sheet-coursework-container">
+                      <strong>Relevant Coursework:</strong> <span id="sheet-coursework">Network Security, Threat Hunting, Incident Response, Cryptography</span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- VIEW 8: PRIVACY & ARCHITECTURE             -->
+        <!-- ========================================== -->
+        <section id="view-privacy" class="content-view">
+          <div class="view-header">
+            <div>
+              <div class="breadcrumb">Home &bull; Capstone Documentation</div>
+              <h2 class="view-title">Privacy, Security & System Architecture</h2>
+              <p class="view-description">
+                CyberCareer AI is engineered as an entirely self-contained, air-gapped web platform respecting student privacy and institutional academic guidelines.
+              </p>
+            </div>
+          </div>
+
+          <div class="privacy-content-grid">
+            <div class="card section-card">
+              <div class="card-header">
+                <div class="badge-icon green"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div>
+                <h3 class="card-title">Air-Gapped Client Privacy Policy</h3>
+              </div>
+              <div class="privacy-body text-sm">
+                <p><strong>1. Zero External Data Transmission:</strong> Unlike commercial platforms that send your resumes, personal contact details, and assessment answers to remote cloud servers or LLM tracking APIs, CyberCareer AI executes 100% locally within your browser sandbox.</p>
+                <p><strong>2. LocalStorage Persistence:</strong> All information—including diagnostic scores, roadmap checkmarks, target career selections, and resume fields—is stored exclusively in your browser's private <code>localStorage</code> domain.</p>
+                <p><strong>3. Academic Integrity & Honest Representation:</strong> This copilot enforces strict transparency: it never hallucinates fake credentials or promises guaranteed salaries. All data entered in the resume assistant is strictly derived from verified student input.</p>
+                <p><strong>4. Immediate Data Purging:</strong> You maintain complete sovereignty over your data. You may export a JSON backup at any time or execute a single-click purge using the Reset Data button.</p>
+              </div>
+            </div>
+
+            <div class="card section-card">
+              <div class="card-header">
+                <div class="badge-icon blue"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></div>
+                <h3 class="card-title">Technical Specifications</h3>
+              </div>
+              <div class="privacy-body text-sm">
+                <ul class="spec-list">
+                  <li><strong>Core Engine:</strong> Semantic HTML5, CSS3 Custom Properties, Vanilla ES6+ JavaScript.</li>
+                  <li><strong>Hosting Target:</strong> Static Web Servers (GitHub Pages, GitLab Pages, Netlify, or direct <code>file://</code> offline execution).</li>
+                  <li><strong>API Cost:</strong> $0.00 / Zero paid API dependencies.</li>
+                  <li><strong>Print Subsystem:</strong> Dedicated <code>@media print</code> stylesheet optimized for ATS A4/Letter standard outputs.</li>
+                  <li><strong>State Management:</strong> Reactive unified state coordinator with automatic JSON serialization.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <!-- Global Footer -->
+    <footer class="app-footer no-print">
+      <div class="footer-left">
+        <span>&copy; CyberCareer AI &bull; Cybersecurity College Capstone Project</span>
+      </div>
+      <div class="footer-center">
+        <span class="footer-badge">Air-Gapped &bull; Client-Side &bull; Open Source</span>
+      </div>
+      <div class="footer-right">
+        <button class="footer-link" onclick="app.navigateTo('privacy')">Privacy & Architecture</button>
+        <span class="footer-divider">&bull;</span>
+        <button class="footer-link" onclick="app.exportDataJSON()">Export JSON</button>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: CAREER DETAIL DRAWER / MODAL        -->
+  <!-- ========================================== -->
+  <div id="career-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modal-career-title">
+    <div class="modal-dialog large">
+      <div class="modal-header">
+        <div class="modal-header-info">
+          <span class="modal-category-chip" id="modal-career-category">Defensive Operations</span>
+          <h2 class="modal-title" id="modal-career-title">SOC Analyst (Security Operations Center)</h2>
+        </div>
+        <button class="btn-icon modal-close-btn" onclick="app.closeCareerModal()" aria-label="Close modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="modal-body" id="modal-career-content">
+        <!-- Injected via script.js -->
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="app.closeCareerModal()">Close</button>
+        <button class="btn btn-primary" id="modal-set-target-btn">Set as Target Career</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: DATA OPTIONS / RESET CONFIRMATION   -->
+  <!-- ========================================== -->
+  <div id="data-options-modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Data Storage & Session Settings</h3>
+        <button class="btn-icon modal-close-btn" onclick="app.closeDataModal()" aria-label="Close modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body text-sm">
+        <p>CyberCareer AI preserves all progress locally in your browser. Select an option below to manage your session data:</p>
+        
+        <div class="data-actions-vertical">
+          <div class="data-action-card">
+            <div>
+              <strong>Load Sample Capstone Data</strong>
+              <div class="text-xs text-muted">Fills realistic progress, scores, and an exemplary SOC student resume.</div>
+            </div>
+            <button class="btn btn-sm btn-outline" onclick="app.loadDemoStudentData(); app.closeDataModal();">Load Demo</button>
+          </div>
+
+          <div class="data-action-card">
+            <div>
+              <strong>Export Profile as JSON</strong>
+              <div class="text-xs text-muted">Download your current progress and resume fields to a portable file.</div>
+            </div>
+            <button class="btn btn-sm btn-outline" onclick="app.exportDataJSON(); app.closeDataModal();">Export</button>
+          </div>
+
+          <div class="data-action-card danger-zone">
+            <div>
+              <strong class="text-danger">Reset All Stored Data</strong>
+              <div class="text-xs text-muted">Permanently clears assessment results, roadmap checks, and custom resume fields.</div>
+            </div>
+            <button class="btn btn-sm btn-danger" onclick="app.confirmResetAll(); app.closeDataModal();">Reset All</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="app.closeDataModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification System -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- App Script -->
+  <script src="script.js"></script>
+</body>
+</html>
